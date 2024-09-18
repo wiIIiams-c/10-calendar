@@ -25,7 +25,7 @@ export const useCalendarStore = () => {
             
             //Insert
             const {data} = await calendarApi.post('/events', calendarEvent)
-            dispatch(onAddNewEvent({...calendarEvent, id: data.eventoGuardado.id, user}))
+            dispatch(onAddNewEvent({...calendarEvent, id: data.eventos.id, user}))
         } catch (error) {
             console.log(error);
             Swal.fire('Error al guardar', error.response.data?.mensaje, 'error')
@@ -33,17 +33,6 @@ export const useCalendarStore = () => {
     }
 
     const startDeletingEvent = async() => {
-        // Swal.fire({
-        //     title: 'Eliminar evento',
-        //     text: '¿Está seguro que desea eliminar el evento?',
-        //     icon: 'question',
-        //     showCancelButton: true,
-        //     confirmButtonText: 'Si, eliminar'
-        // }).then((result) => {
-        //     if(result.isConfirmed){
-        //         dispatch(onDeleteEvent())
-        //     }
-        // })
         try {
             await calendarApi.delete(`/events/${activeEvent.id}`)
             dispatch(onDeleteEvent())
